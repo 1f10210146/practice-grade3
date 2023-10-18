@@ -19,5 +19,14 @@
         </select><br>
         <button type="submit">送信</button>
     </form>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ChatGPT</button>
+    </form>
+
+    {{ chat_results }}
+
 </body>
 </html>
