@@ -64,13 +64,16 @@ def result(request):
         #result = suggestion
         #結果を表示
         result = ""
-        subject = request.POST['subject']
-        if subject == "-":
+        input = request.POST['input']
+        if input == "":
             return redirect(home)
+        
+        #ChatGPTの処理
+        output = [{"question":"1+1=","answer":"2"},{"question":"How are you","answer":"I'm fine"}]
     
         context = {
             'result': result,
-            'subject': subject
+            'input': output
         }
         return render(request, "teamapp/result.html", context)
     

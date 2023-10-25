@@ -1,32 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>hoge</title>
-</head>
-<body>
-    <h1>hello django</h1>
+  <head>
+    <meta charset="utf-8" />
+    <title>教員補助</title>
+    <link href="{% static 'css/index.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>教員補助</h1>
     <form method="post" action="{% url 'viewresult' %}">
-        {% csrf_token %}
-        <label for="subject">subject:</label>
-        <select id="subject" name="subject">
-            <option hidden>-</option>
-            <option value="math">math</option>
-            <option value="science">science</option>
-            <option value="english">english</option>
-            <option value="japanese">japanese</option>
-            <option value="society">society</option>
-        </select><br>
-        <button type="submit">送信</button>
+      {% csrf_token %}
+      <input type="text" name="input" />
+      <br />
+      <button type="submit">送信</button>
     </form>
 
     <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">ChatGPT</button>
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">ChatGPT</button>
     </form>
 
     {{ chat_results }}
-
-</body>
+  </body>
 </html>
