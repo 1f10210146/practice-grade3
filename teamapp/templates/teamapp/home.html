@@ -8,18 +8,23 @@
   </head>
   <body>
     <h1>教員補助</h1>
-    <form method="post" action="{% url 'viewresult' %}">
+    <!-- <form method="post" action="{% url 'viewresult' %}">
       {% csrf_token %}
       <input type="text" name="input" />
       <br />
       <button type="submit">送信</button>
-    </form>
+    </form> -->
 
     <form method="POST">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">ChatGPT</button>
+      {% csrf_token %}
+      <div class="inputForm">
+        <div>{{ form.as_p }}</div>
+        <button type="submit" class="button">検索</button>
+      </div>
     </form>
 
-    {{ chat_results }}
+    {{ chat_results }} {% for p in chat_results %}
+    <p>{{ p }}</p>
+    {% endfor %}
   </body>
 </html>
