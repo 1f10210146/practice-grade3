@@ -142,17 +142,20 @@ db_chain = SQLDatabaseChain(
 
 # データベースの参照結果を出力する関数
 def search_db(request):
+    text = ""  # text変数を初期化
+    result = None  # result変数を初期化
     if request.method == 'POST':
         # POSTリクエストの場合
 
         # リクエストから質問を取得
         text = request.POST.get('input_text')
     
+    
     if text:
     # db_chainを実行
       result = db_chain(text)
 
-    if "query" in result and "intermediate_steps" in result:
+    if result is not None and "query" in result and "intermediate_steps" in result:
         # 出力結果を加工
         question = result["query"]
         sql_query = ""
@@ -164,8 +167,7 @@ def search_db(request):
             if "input" in first_step:
                 input_text = first_step["input"]
                 
-                # ここでフォームの入力内容を表示
-                print("Form Input Text:", text)
+                
                 
                 #"SQLQuery:" と "SQLResult:" の位置を確認
                 if "SQLQuery:" in input_text and "SQLResult:" in input_text:
@@ -182,10 +184,16 @@ def search_db(request):
             'Answer': answer,
         }
         
+        
+        
         return render(request, 'teamapp/search_db.html', dictionary)
 
     # POSTリクエストでない場合、エラーまたはリダイレクトを処理
     return render(request, 'teamapp/search_db.html')
+
+
+#result = search_db(text)
+#print('aaaaa',result)
 
 
 
