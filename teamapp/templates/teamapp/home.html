@@ -23,8 +23,8 @@
       </div>
     </form>
 
-    {{ chat_results }} {% for p in chat_results %}
-    <p>{{ p }}</p>
-    {% endfor %}
+    {{ chat_results }}
+
+    <a href="{% url 'search_db' %}">データベース検索</a>
   </body>
 </html>

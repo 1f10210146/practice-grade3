@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Database</title>
+</head>
+<body>
+    <h1>Search Database</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="input_text">Enter your question:</label>
+        <input type="text" id="input_text" name="input_text" required>
+        <button type="submit">Search</button>
+    </form>
+    <h1>Search DB Results</h1>
+    
+    <p><strong>Your Question:</strong> {{ Question }}</p>
+    
+    <p><strong>SQL Query:</strong></p>
+    <pre>{{ SQL_Query }}</pre>
+    
+    <p><strong>SQL Result:</strong></p>
+    <pre>{{ SQL_Result }}</pre>
+    
+    <p><strong>Answer:</strong> {{ Answer }}</p>
+    
+    <a href="{% url 'home' %}">Back to Home</a>
+
+    
+</body>
+</html>
+
