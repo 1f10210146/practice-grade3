@@ -82,7 +82,6 @@ def result(request):
 
 
 
-import openai
 import os
 from sqlalchemy import text, create_engine
 from langchain import SQLDatabase, PromptTemplate, OpenAI
@@ -96,9 +95,9 @@ SECRET_KEY = "Pm16GE8LCg592kXS6A7p8cQmaWS9IO_2BVpUH62Nfu7Bt8-6dBl5rAClH1mpniKo8D
 os.environ["OPENAI_API_KEY"] = SECRET_KEY
 
 # データベースの接続設定
-db_name = "sqlite-sakila.db"
+db_name = "test.db"
 sql_url = "sqlite:///" + db_name
-tables = ["customer", "store", "staff"]
+tables = ["my_table"]
 
 # SQLDatabaseオブジェクト
 sql_database = SQLDatabase.from_uri(
@@ -154,27 +153,26 @@ def search_db(request):
     if text:
     # db_chainを実行
       result = db_chain(text)
+      print(result)
 
     if result is not None and "query" in result and "intermediate_steps" in result:
-        # 出力結果を加工
         question = result["query"]
-        sql_query = ""
-        sql_result = ""
+        sql_queries = []
+        sql_results = []
 
-        # intermediate_stepsからSQLQueryとSQLResultを抽出
-        if result["intermediate_steps"]:
-            first_step = result["intermediate_steps"][0]
-            if "input" in first_step:
-                input_text = first_step["input"]
-                
-                
-                
-                #"SQLQuery:" と "SQLResult:" の位置を確認
+        for step in result["intermediate_steps"]:
+            if "input" in step:
+                input_text = step["input"]
                 if "SQLQuery:" in input_text and "SQLResult:" in input_text:
                     sql_query = input_text.split("SQLQuery:")[1].split("SQLResult:")[0].replace("  ", " ").replace("\n", "")
                     sql_result = input_text.split("SQLResult:")[1].split("Answer:")[0].replace("  ", " ").replace("\n", "")
 
+                    sql_queries.append(sql_query)
+                    sql_results.append(sql_result)
+
         answer = result["result"]
+
+    
 
         # データを辞書に格納
         dictionary = {
@@ -190,16 +188,3 @@ def search_db(request):
 
     # POSTリクエストでない場合、エラーまたはリダイレクトを処理
     return render(request, 'teamapp/search_db.html')
-
-
-#result = search_db(text)
-#print('aaaaa',result)
-
-
-
-
-
-
-
-
-

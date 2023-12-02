@@ -17,13 +17,15 @@
     
     <p><strong>SQL Query:</strong> {{ SQL_Query }}</p>
     
+
     <p><strong>SQL Result:</strong> {{ SQL_Result }}</p>
     
-    <p><strong>Answer:</strong> {{ Answer }}</p>
+
+    <p><strong>Answer:</strong> {{ Answer|safe }}</p>
+
     
     <a href="{% url 'home' %}">Back to Home</a>
 
     
 </body>
 </html>
-
