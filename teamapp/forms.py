@@ -7,3 +7,4 @@ class ChatForm(forms.Form):
 
 class SearchDBForm(forms.Form):
     question = forms.CharField(label='質問', max_length=100)
+

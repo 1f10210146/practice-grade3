@@ -171,6 +171,7 @@ def search_db(request):
                     sql_results.append(sql_result)
 
         answer = result["result"]
+        
 
     
 
@@ -183,8 +184,28 @@ def search_db(request):
         }
         
         
+        for sql_result in sql_results:
+                saved_result = SavedResult.objects.create(sql_result=sql_result)
+                saved_result.save()
         
         return render(request, 'teamapp/search_db.html', dictionary)
 
     # POSTリクエストでない場合、エラーまたはリダイレクトを処理
     return render(request, 'teamapp/search_db.html')
+
+
+
+from .models import SavedResult
+
+def new(request):
+    context = {
+        "saved_results" : SavedResult.objects.all()
+    }
+    
+
+        # new.html を表示する際に saved_results を渡す
+    return render(request, 'teamapp/new.html', context)
+
+    # POSTリクエストでない場合、エラーまたはリダイレクトを処理
+    #saved_results = SavedResult.objects.all()
+    #return render(request, 'teamapp/new.html', {'saved_results': saved_results})

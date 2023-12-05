@@ -1,0 +1,29 @@
+<!-- new.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>New Page</title>
+</head>
+<body>
+    <h1>New Page</h1>
+
+    {% if saved_results %}
+        
+        <!-- 保存された SQL 結果の履歴 -->
+        <h2>保存された SQL 結果の履歴</h2>
+        <ul>
+            {% for saved_result in saved_results %}
+                <li>{{ saved_result.sql_result | linebreaksbr }}</li>
+                <br>
+            {% endfor %}
+        </ul>
+
+        <!-- 他のデータを表示する場合は同様に追加 -->
+    {% else %}
+        <p>SQL 結果はありません。</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}">ホームに戻る</a>
+</body>
+</html>

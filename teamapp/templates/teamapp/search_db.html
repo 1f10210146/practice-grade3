@@ -1,31 +1,49 @@
+<!-- search_db.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Search Database</title>
+    <title>データベース検索</title>
 </head>
 <body>
-    <h1>Search Database</h1>
+    <h1>データベース検索</h1>
     <form method="post">
         {% csrf_token %}
-        <label for="input_text">Enter your question:</label>
+        <p for="input_text">記入例:●●の問題とその答え●個</p>
+        <label for="input_text">検索:</label>
         <input type="text" id="input_text" name="input_text" required>
-        <button type="submit">Search</button>
+        <button type="submit">検索</button>
     </form>
-    <h1>Search DB Results</h1>
     
-    <p><strong>Your Question:</strong> {{ Question }}</p>
-    
-    <p><strong>SQL Query:</strong> {{ SQL_Query }}</p>
+    {% if Question %}
+        <p><strong>質問:</strong> {{ Question }}</p>
+        <p><strong>SQL クエリ:</strong> {{ SQL_Query }}</p>
+        <p><strong>SQL 結果:</strong> {{ SQL_Result }}</p>
+        <p><strong>回答:</strong> {{ Answer }}</p>
+        
+        <!-- SQL_Resultを隠しフィールドに保存 -->
+        <input type="hidden" id="saved_sql_result" name="saved_sql_result" value="{{ SQL_Result }}">
+        
+        <!-- SQL_Resultを保存するボタンを追加 -->
+        <button onclick="saveSQLResult()">SQL 結果を保存</button>
+        <a href="{% url 'new' %}">保存された SQL 結果の履歴</a>
+    {% endif %}
+
+    <a href="{% url 'home' %}">ホームに戻る</a>
     
 
-    <p><strong>SQL Result:</strong> {{ SQL_Result }}</p>
-    
-
-    <p><strong>Answer:</strong> {{ Answer|safe }}</p>
-
-    
-    <a href="{% url 'home' %}">Back to Home</a>
-
+    <script>
+        function saveSQLResult() {
+            // 隠しフィールドからSQL_Resultを取得
+            var savedSQLResult = document.getElementById("saved_sql_result").value;
+            
+            // AJAXリクエストなどでサーバーにSQL_Resultを保存するアクションを実行
+            // 例: JavaScriptを使用して、保存したいデータをサーバーに送信するためのfetch APIを使用
+            // ここではアラートを表示する例を示しています
+            alert("SQL 結果が保存されました: " + savedSQLResult);
+            //window.location.href = "{% url 'new' %}";
+        }
+    </script>
     
 </body>
 </html>
