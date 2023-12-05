@@ -153,7 +153,7 @@ def search_db(request):
     if text:
     # db_chainを実行
       result = db_chain(text)
-      print(result)
+      #print(result)
 
     if result is not None and "query" in result and "intermediate_steps" in result:
         question = result["query"]
@@ -170,7 +170,7 @@ def search_db(request):
                     sql_queries.append(sql_query)
                     sql_results.append(sql_result)
 
-        answer = result["result"]
+        answer = result['result']
         
 
     

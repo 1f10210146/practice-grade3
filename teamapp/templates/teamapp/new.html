@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1>New Page</h1>
+    <a href="{% url 'home' %}">ホームに戻る</a>
+    <a href="{% url 'search_db' %}">問題作成</a>
 
     {% if saved_results %}
         
@@ -24,6 +26,6 @@
         <p>SQL 結果はありません。</p>
     {% endif %}
 
-    <a href="{% url 'home' %}">ホームに戻る</a>
+    
 </body>
 </html>
