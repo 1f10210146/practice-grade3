@@ -4,6 +4,16 @@ from django.template import loader
 from .forms import ChatForm
 
 import openai
+import os
+from sqlalchemy import text, create_engine
+#from langchain import SQLDatabase, PromptTemplate, OpenAI
+from langchain_experimental.sql import SQLDatabaseChain
+from django.shortcuts import render, redirect
+from .forms import ChatForm, SearchDBForm
+from langchain.utilities import SQLDatabase
+from langchain.prompts import PromptTemplate
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 openai.api_base = 'https://api.openai.iniad.org/api/v1'
 
 # Create your views here.
@@ -82,12 +92,9 @@ def result(request):
 
 
 
-import os
-from sqlalchemy import text, create_engine
-from langchain import SQLDatabase, PromptTemplate, OpenAI
-from langchain_experimental.sql import SQLDatabaseChain
-from django.shortcuts import render, redirect
-from .forms import ChatForm, SearchDBForm
+
+
+
 
 # API認証情報
 openai.api_base = 'https://api.openai.iniad.org/api/v1'
@@ -106,7 +113,7 @@ sql_database = SQLDatabase.from_uri(
 )
 
 # LLM作成
-llm = OpenAI(
+llm_chain = ChatOpenAI(
     model_name="gpt-3.5-turbo",
     temperature=0,
     verbose=False,
@@ -131,9 +138,9 @@ prompt = PromptTemplate(
 )
 
 # SQLDatabaseChainを作成
-db_chain = SQLDatabaseChain(
-    llm=llm,
-    database=sql_database,
+db_chain = SQLDatabaseChain.from_llm(
+    llm=llm_chain,
+    db=sql_database,
     prompt=prompt,
     verbose=True,
     return_intermediate_steps=True,
@@ -173,8 +180,6 @@ def search_db(request):
         answer = result['result']
         
 
-    
-
         # データを辞書に格納
         dictionary = {
             'Question': question,
@@ -187,6 +192,8 @@ def search_db(request):
         for sql_result in sql_results:
                 saved_result = SavedResult.objects.create(sql_result=sql_result)
                 saved_result.save()
+                
+        
         
         return render(request, 'teamapp/search_db.html', dictionary)
 
