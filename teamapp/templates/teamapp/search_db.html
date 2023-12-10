@@ -1,49 +1,99 @@
 <!-- search_db.html -->
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>データベース検索</title>
-</head>
-<body>
-    <h1>英語の問題作成</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p for="input_text">記入例:●●の問題とその答え●個</p>
-        <label for="input_text">検索:</label>
-        <input type="text" id="input_text" name="input_text" required>
-        <button type="submit">検索</button>
-    </form>
-    
-    {% if Question %}
+    <link href="{% static 'css/reset.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/search_db.css' %}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="content">
+      <a href="{% url 'home' %}" id="backButton">ホームに戻る</a>
+      <h1>英語の問題作成</h1>
+      <form method="post" class="form">
+        <div class="condition">
+          <div class="conditionLabel">教科</div>
+          <label class="selectbox">
+            <select name="subject">
+              <option value="english">英語</option>
+            </select>
+          </label>
+        </div>
+        <div class="condition">
+          <div class="conditionLabel">学年</div>
+          <label class="selectbox">
+            <select name="grade" id="grade">
+              <option value="all">全学年</option>
+              <option value="first">1年</option>
+              <option value="second">2年</option>
+              <option value="third">3年</option>
+            </select>
+          </label>
+        </div>
+        <div class="condition">
+          <div class="conditionLabel">単元</div>
+          <label class="selectbox">
+            <select name="field" id="field"></select>
+          </label>
+        </div>
+        <div class="searchForm">
+          {% csrf_token %}
+          <label for="input_text">
+            <input
+              type="text"
+              id="input_text"
+              name="input_text"
+              required
+              placeholder="●●の問題"
+            />
+          </label>
+          <button type="submit" aria-label="検索"></button>
+        </div>
+      </form>
+      <div id="border"></div>
+      {% if Question %}
+      <div class="sqlQA">
         <p><strong>質問:</strong> {{ Question }}</p>
         <p><strong>SQL クエリ:</strong> {{ SQL_Query }}</p>
         <p><strong>SQL 結果:</strong> {{ SQL_Result }}</p>
         <p><strong>回答:</strong> {{ Answer }}</p>
-        
-        <!-- SQL_Resultを隠しフィールドに保存 -->
-        <input type="hidden" id="saved_sql_result" name="saved_sql_result" value="{{ SQL_Result }}">
-        
-        <!-- SQL_Resultを保存するボタンを追加 -->
-        <button onclick="saveSQLResult()">SQL 結果を保存</button>
-        <a href="{% url 'new' %}">保存された SQL 結果の履歴</a>
-    {% endif %}
+      </div>
 
-    <a href="{% url 'home' %}">ホームに戻る</a>
-    
+      <!-- SQL_Resultを隠しフィールドに保存 -->
+      <input
+        type="hidden"
+        id="saved_sql_result"
+        name="saved_sql_result"
+        value="{{ SQL_Result }}"
+      />
 
-    <script>
+      <!-- SQL_Resultを保存するボタンを追加 -->
+      <button onclick="saveSQLResult()">SQL 結果を保存</button>
+      <a href="{% url 'new' %}">保存された SQL 結果の履歴</a>
+      {% endif %}
+
+      <script src="{% static 'js/searchField.js' %}"></script>
+      <script>
         function saveSQLResult() {
-            // 隠しフィールドからSQL_Resultを取得
-            var savedSQLResult = document.getElementById("saved_sql_result").value;
-            
-            // AJAXリクエストなどでサーバーにSQL_Resultを保存するアクションを実行
-            // 例: JavaScriptを使用して、保存したいデータをサーバーに送信するためのfetch APIを使用
-            // ここではアラートを表示する例を示しています
-            alert("SQL 結果が保存されました: " + savedSQLResult);
-            //window.location.href = "{% url 'new' %}";
+          // 隠しフィールドからSQL_Resultを取得
+          var savedSQLResult =
+            document.getElementById("saved_sql_result").value;
+
+          // AJAXリクエストなどでサーバーにSQL_Resultを保存するアクションを実行
+          // 例: JavaScriptを使用して、保存したいデータをサーバーに送信するためのfetch APIを使用
+          // ここではアラートを表示する例を示しています
+          alert("SQL 結果が保存されました: " + savedSQLResult);
+          //window.location.href = "{% url 'new' %}";
         }
-    </script>
-    
-</body>
+      </script>
+    </div>
+  </body>
 </html>

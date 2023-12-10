@@ -1,0 +1,131 @@
+body {
+  display: flex;
+  justify-content: center;
+  font-family: "Zen Kaku Gothic New", sans-serif;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 900px;
+  margin: 20px 0 20px 0;
+  border: solid 3px gray;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.conditionLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  margin-right: 50px;
+}
+
+#backButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#border {
+  margin: 30px;
+  width: 500px;
+  border-bottom: solid 3px gray;
+}
+
+.searchForm {
+  margin: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  border: 2px solid #10bc14;
+  border-radius: 8px;
+}
+
+.searchForm input {
+  width: 250px;
+  height: 35px;
+  padding: 5px 15px;
+  border: none;
+  box-sizing: border-box;
+  font-size: 1em;
+  outline: none;
+}
+
+.searchForm input::placeholder {
+  color: #767d83;
+}
+
+.searchForm button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 35px;
+  border: none;
+  background-color: #10bc14;
+  cursor: pointer;
+}
+
+.searchForm button::after {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23fff%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  content: "";
+}
+
+.selectbox {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.selectbox::after {
+  position: absolute;
+  right: 15px;
+  width: 10px;
+  height: 7px;
+  background-color: #535353;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.selectbox select {
+  appearance: none;
+  min-width: 230px;
+  height: 2.8em;
+  padding: 0.4em calc(0.8em + 30px) 0.4em 0.8em;
+  border: none;
+  border-bottom: 2px solid #cccccc;
+  background-color: #fff;
+  color: #333333;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.selectbox select:focus {
+  outline: none;
+}
+
+.sqlQA {
+  max-width: 800px;
+}
