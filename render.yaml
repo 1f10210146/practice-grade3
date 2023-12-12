@@ -1,12 +1,12 @@
 databases:
-  - name: db.sqlite3
+  - name: blog-sample-db
     plan: free
-    databaseName: db.sqlite3
-    user: db.sqlite3
+    databaseName: blog_sample
+    user: blog_sample
 
 services:
   - type: web
-    name: practice3a-11-team3
+    name: blog-sample-web
     env: python
     plan: free
     branch: production
@@ -17,7 +17,7 @@ services:
         value: 3.8.2
       - key: DATABASE_URL
         fromDatabase:
-          name: db.sqlite3
+          name: practice3a-11-team3
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
