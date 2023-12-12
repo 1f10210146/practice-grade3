@@ -1,8 +1,8 @@
 databases:
-  - name: blog-sample-db
+  - name: db.sqlite3
     plan: free
-    databaseName: blog_sample
-    user: blog_sample
+    databaseName: db.sqlite3
+    user: db.sqlite3
 
 services:
   - type: web
@@ -17,7 +17,7 @@ services:
         value: 3.8.2
       - key: DATABASE_URL
         fromDatabase:
-          name: blog-sample-db
+          name: db.sqlite3
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
