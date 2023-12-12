@@ -7,3 +7,6 @@ from django.db import models
 
 class SavedResult(models.Model):
     sql_result = models.TextField()
+    
+    def __str__(self):
+        return self.sql_result

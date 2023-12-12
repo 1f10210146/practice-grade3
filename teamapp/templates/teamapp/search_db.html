@@ -44,6 +44,25 @@
             <select name="field" id="field"></select>
           </label>
         </div>
+
+        <div class="condition">
+          <div class="conditionLabel">作成数</div>
+          <label class="selectbox">
+            <select name="count" id="count">
+              <option value="first">1</option>
+              <option value="second">2</option>
+              <option value="third">3</option>
+              <option value="four">4</option>
+              <option value="five">5</option>
+              <option value="six">6</option>
+              <option value="seven">7</option>
+              <option value="eight">8</option>
+              <option value="nine">9</option>
+              <option value="ten">10</option>
+            </select>
+          </label>
+        </div>
+
         <div class="searchForm">
           {% csrf_token %}
           <label for="input_text">
@@ -61,8 +80,8 @@
       <div id="border"></div>
       {% if Question %}
       <div class="sqlQA">
-        <p><strong>質問:</strong> {{ Question }}</p>
-        <p><strong>SQL クエリ:</strong> {{ SQL_Query }}</p>
+        <!--<p><strong>質問:</strong> {{ Question }}</p>
+        <p><strong>SQL クエリ:</strong> {{ SQL_Query }}</p> -->
         <p><strong>SQL 結果:</strong> {{ SQL_Result }}</p>
         <p><strong>回答:</strong> {{ Answer }}</p>
       </div>
@@ -80,8 +99,28 @@
       <a href="{% url 'new' %}">保存された SQL 結果の履歴</a>
       {% endif %}
 
+
       <script src="{% static 'js/searchField.js' %}"></script>
       <script>
+        function updateSearchInput() {
+          // ドロップダウンから選択された値を取得
+          var subject = document.getElementsByName("subject")[0].value;
+          var grade = document.getElementById("grade").value;
+          var field = document.getElementById("field").value;
+          var count = document.getElementById("count").value;
+      
+          // 選択された値を組み合わせて検索文字列を作成
+          var searchString = subject + " " + grade + " " + field + " " + count;
+      
+          // 検索ボックスの値を更新
+          document.getElementById("input_text").value = searchString;
+        }
+      
+        // ドロップダウンの変更イベントに関数を関連付ける
+        document.getElementsByName("subject")[0].addEventListener("change", updateSearchInput);
+        document.getElementById("grade").addEventListener("change", updateSearchInput);
+        document.getElementById("field").addEventListener("change", updateSearchInput);
+        document.getElementById("count").addEventListener("change", updateSearchInput);
         function saveSQLResult() {
           // 隠しフィールドからSQL_Resultを取得
           var savedSQLResult =

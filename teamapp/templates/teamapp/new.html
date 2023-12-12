@@ -1,31 +1,55 @@
-<!-- new.html -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            margin-right: 20px;
+            color: #0066cc; /* リンクの色を変更 */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-    <h1>New Page</h1>
     <a href="{% url 'home' %}">ホームに戻る</a>
     <a href="{% url 'search_db' %}">問題作成</a>
 
     {% if saved_results %}
-        
-        <!-- 保存された SQL 結果の履歴 -->
         <h2>保存された SQL 結果の履歴</h2>
         <ul>
             {% for saved_result in saved_results %}
                 <li>{{ saved_result.sql_result | linebreaksbr }}</li>
                 <br>
+                <br>
             {% endfor %}
         </ul>
-
-        <!-- 他のデータを表示する場合は同様に追加 -->
     {% else %}
         <p>SQL 結果はありません。</p>
     {% endif %}
-
-    
 </body>
 </html>

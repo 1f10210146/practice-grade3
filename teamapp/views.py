@@ -14,6 +14,7 @@ from langchain.utilities import SQLDatabase
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
+from .forms import SearchDBForm
 openai.api_base = 'https://api.openai.iniad.org/api/v1'
 
 # Create your views here.
@@ -60,7 +61,8 @@ def home(request):
     template = loader.get_template('teamapp/home.html')
     context = {
         'form': form,
-        'chat_results': chat_results
+        'chat_results': chat_results,
+        'SQL_Result': request.session.get('SQL_Result', ''),
     }
     return HttpResponse(template.render(context, request))
 
@@ -150,6 +152,8 @@ db_chain = SQLDatabaseChain.from_llm(
 def search_db(request):
     text = ""  # text変数を初期化
     result = None  # result変数を初期化
+    form = SearchDBForm()
+    
     if request.method == 'POST':
         # POSTリクエストの場合
 
@@ -182,6 +186,7 @@ def search_db(request):
 
         # データを辞書に格納
         dictionary = {
+            'form': form,
             'Question': question,
             'SQL_Query': sql_query,
             'SQL_Result': sql_result,
@@ -194,8 +199,12 @@ def search_db(request):
                 saved_result.save()
                 
         
+        request.session['SQL_Result'] = sql_result        
+        
         
         return render(request, 'teamapp/search_db.html', dictionary)
+    
+    context = {'form': form}
 
     # POSTリクエストでない場合、エラーまたはリダイレクトを処理
     return render(request, 'teamapp/search_db.html')

@@ -17,13 +17,17 @@
 
     <form method="POST">
       {% csrf_token %}
+      <p>{{SQL_Result}}</p>
       <div class="inputForm">
+        <br>
         <div>{{ form.as_p }}</div>
         <button type="submit" class="button">検索</button>
       </div>
     </form>
 
     {{ chat_results }}
+
+    <br>
 
     <a href="{% url 'search_db' %}">問題作成</a>
     <a href="{% url 'new' %}">履歴</a>
