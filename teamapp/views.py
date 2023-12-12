@@ -15,56 +15,58 @@ from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
 from .forms import SearchDBForm
+from .models import SavedResult
 openai.api_base = 'https://api.openai.iniad.org/api/v1'
 
-# Create your views here.
+
 
 def home(request):
     """
     チャット画面
     """
 
-    # 応答結果
-    chat_results = ""
+    # SQL_Resultをセッションから取得
+    sql_result = request.session.get('SQL_Result', '')
 
-    if request.method == "POST":
-        # ChatGPTボタン押下時
+    # ChatGPTの応答結果
+    chat_results = request.session.get('Chat_Results', '')
 
-        form = ChatForm(request.POST)
-        if form.is_valid():
+    if sql_result:
+        # SQL_Resultがある場合、ChatGPTにかけて解説を取得
+        openai.api_key = "Pm16GE8LCg592kXS6A7p8cQmaWS9IO_2BVpUH62Nfu7Bt8-6dBl5rAClH1mpniKo8DyuiAkrAltw0Y5S5j87VVA"
 
-            sentence = form.cleaned_data['sentence']
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "問題の答えと解説をお願いします"
+                },
+                {
+                    "role": "user",
+                    "content": sql_result
+                },
+            ],
+        )
 
-            # TODO: APIキーのハードコーディングは避ける
-            openai.api_key = "Pm16GE8LCg592kXS6A7p8cQmaWS9IO_2BVpUH62Nfu7Bt8-6dBl5rAClH1mpniKo8DyuiAkrAltw0Y5S5j87VVA"
+        chat_results = response["choices"][0]["message"]["content"]
 
-            # ChatGPT
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "日本語で応答してください"
-                    },
-                    {
-                        "role": "user",
-                        "content": sentence
-                    },
-                ],
-            )
+    # ChatFormのインスタンスを作成
+    form = ChatForm()
 
-            chat_results = response["choices"][0]["message"]["content"]
-
-    else:
-        form = ChatForm()
-
-    template = loader.get_template('teamapp/home.html')
+    # テンプレートに渡すコンテキストを定義
     context = {
         'form': form,
+        'SQL_Result': sql_result,
         'chat_results': chat_results,
-        'SQL_Result': request.session.get('SQL_Result', ''),
     }
+    
+   
+
+    # テンプレートを描画してHTTPレスポンスを返す
+    template = loader.get_template('teamapp/home.html')
     return HttpResponse(template.render(context, request))
+
 
 
 #def home(request):
@@ -211,7 +213,7 @@ def search_db(request):
 
 
 
-from .models import SavedResult
+
 
 def new(request):
     context = {

@@ -7,24 +7,15 @@
     <link href="{% static 'css/index.css' %}" rel="stylesheet" />
   </head>
   <body>
-    <h1>教員補助</h1>
-    <!-- <form method="post" action="{% url 'viewresult' %}">
-      {% csrf_token %}
-      <input type="text" name="input" />
-      <br />
-      <button type="submit">送信</button>
-    </form> -->
+    <h1>問題と解説</h1>
 
-    <form method="POST">
-      {% csrf_token %}
-      <p>{{SQL_Result}}</p>
-      <div class="inputForm">
-        <br>
-        <div>{{ form.as_p }}</div>
-        <button type="submit" class="button">検索</button>
-      </div>
-    </form>
+    <!-- SQL_Result を表示 -->
 
+    <!-- 検索フォームを追加 -->
+
+    {{SQL_Result}}
+    <br>
+    <br>
     {{ chat_results }}
 
     <br>
