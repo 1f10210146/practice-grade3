@@ -25,3 +25,5 @@ services:
         value: config.production
       - key: WEB_CONCURRENCY
         value: 4
+
+        
