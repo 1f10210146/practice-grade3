@@ -9,7 +9,7 @@ services:
     name: practice3a-11-team3
     env: python
     plan: free
-    branch: main
+    branch: production
     buildCommand: "./build.sh"
     startCommand: "gunicorn config.wsgi:application"
     envVars:
