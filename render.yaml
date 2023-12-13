@@ -6,7 +6,7 @@ databases:
 
 services:
   - type: web
-    name: blog-sample-web
+    name: practice3a-11-team3
     env: python
     plan: free
     branch: production
