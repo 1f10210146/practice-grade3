@@ -165,8 +165,12 @@ def search_db(request):
     
     if text:
     # db_chainを実行
-      result = db_chain(text)
-      #print(result)
+        try:
+            result = db_chain(text)
+        
+        except Error as e:
+            print(e)
+            return render(request, 'teamapp/search_db.html')
 
     if result is not None and "query" in result and "intermediate_steps" in result:
         question = result["query"]
