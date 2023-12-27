@@ -4,3 +4,7 @@ gunicorn
 psycopg2-binary
 dj-database-url
 pytz
+openai == 0.28
+sqlalchemy
+langchain_experimental
+langchain

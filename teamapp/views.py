@@ -33,7 +33,7 @@ def home(request):
 
     if sql_result:
         # SQL_Resultがある場合、ChatGPTにかけて解説を取得
-        openai.api_key = "Pm16GE8LCg592kXS6A7p8cQmaWS9IO_2BVpUH62Nfu7Bt8-6dBl5rAClH1mpniKo8DyuiAkrAltw0Y5S5j87VVA"
+        openai.api_key = "HTxvwG9NHlr26VOiR8tmCcQxu6nfHFnMbx4kNq_CTCv04E-HwFlhH2Q6xou8agVdzkfmX07sirQl2FIIgp4o6hw"
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -102,7 +102,7 @@ def result(request):
 
 # API認証情報
 openai.api_base = 'https://api.openai.iniad.org/api/v1'
-SECRET_KEY = "Pm16GE8LCg592kXS6A7p8cQmaWS9IO_2BVpUH62Nfu7Bt8-6dBl5rAClH1mpniKo8DyuiAkrAltw0Y5S5j87VVA"
+SECRET_KEY = "HTxvwG9NHlr26VOiR8tmCcQxu6nfHFnMbx4kNq_CTCv04E-HwFlhH2Q6xou8agVdzkfmX07sirQl2FIIgp4o6hw"
 os.environ["OPENAI_API_KEY"] = SECRET_KEY
 
 # データベースの接続設定
@@ -168,7 +168,7 @@ def search_db(request):
         try:
             result = db_chain(text)
         
-        except Error as e:
+        except Exception as e:
             print(e)
             return render(request, 'teamapp/search_db.html')
 
