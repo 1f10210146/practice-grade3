@@ -167,9 +167,10 @@ def search_db(request):
     # db_chainを実行
         try:
             result = db_chain(text)
+            #print("Langchain Result:", result)
         
         except Exception as e:
-            print(e)
+            print("Error:", e)
             return render(request, 'teamapp/search_db.html')
 
     if result is not None and "query" in result and "intermediate_steps" in result:

@@ -23,7 +23,7 @@
           <div class="conditionLabel">教科</div>
           <label class="selectbox">
             <select name="subject">
-              <option value="english">英語</option>
+              <option value="英語">英語</option>
             </select>
           </label>
         </div>
@@ -31,7 +31,7 @@
           <div class="conditionLabel">学年</div>
           <label class="selectbox">
             <select name="grade" id="grade">
-              <option value="all">全学年</option>
+              <option value="全学年">全学年</option>
               <option value="first">1年</option>
               <option value="second">2年</option>
               <option value="third">3年</option>
@@ -49,16 +49,16 @@
           <div class="conditionLabel">作成数</div>
           <label class="selectbox">
             <select name="count" id="count">
-              <option value="1個作成">1</option>
-              <option value="2個作成">2</option>
-              <option value="3個作成">3</option>
-              <option value="4個作成">4</option>
-              <option value="5個作成">5</option>
-              <option value="6個作成">6</option>
-              <option value="7個作成">7</option>
-              <option value="8個作成">8</option>
-              <option value="9個作成">9</option>
-              <option value="10個作成">10</option>
+              <option value="1個取得">1</option>
+              <option value="2個取得">2</option>
+              <option value="3個取得">3</option>
+              <option value="4個取得">4</option>
+              <option value="5個取得">5</option>
+              <option value="6個取得">6</option>
+              <option value="7個取得">7</option>
+              <option value="8個取得">8</option>
+              <option value="9個取得">9</option>
+              <option value="10個取得">10</option>
             </select>
           </label>
         </div>
@@ -83,7 +83,7 @@
         <!--<p><strong>質問:</strong> {{ Question }}</p>
         <p><strong>SQL クエリ:</strong> {{ SQL_Query }}</p> -->
         <p><strong>SQL 結果:</strong> {{ SQL_Result }}</p>
-        <p><strong>回答:</strong> {{ Answer }}</p>
+        <!--p><strong>回答:</strong> {{ Answer }}</p -->
       </div>
 
       <!-- SQL_Resultを隠しフィールドに保存 -->
@@ -111,7 +111,7 @@
           var count = document.getElementById("count").value;
       
           // 選択された値を組み合わせて検索文字列を作成
-          var searchString = subject + " " + grade + " " + field + " " + count;
+          var searchString = field + "の問題とその答えを" + count;
       
           // 検索ボックスの値を更新
           document.getElementById("input_text").value = searchString;
