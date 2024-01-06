@@ -7,6 +7,7 @@ urlpatterns = [
     path('result', views.result, name='viewresult'),
     path('home/', views.home, name='home'),
     path('new/', views.new, name='new'),
-    
+    path('delete/<int:id>/', views.delete_sql_result, name='delete_sql_result'),
+    path('history/', views.history, name='history'),
     
 ]

@@ -232,3 +232,34 @@ def new(request):
     # POSTリクエストでない場合、エラーまたはリダイレクトを処理
     #saved_results = SavedResult.objects.all()
     #return render(request, 'teamapp/new.html', {'saved_results': saved_results})
+    
+    
+from django.views.decorators.http import require_POST
+from .models import SavedResult  # Replace with the actual model name
+
+@require_POST  # Ensure that this view only accepts POST requests
+# 削除機能
+def delete_sql_result(request, id):
+    # Get the object you want to delete
+    saved_result = SavedResult.objects.get(pk=id)
+    
+    # Delete the object
+    saved_result.delete()
+    
+    # Redirect to a success page or back to the page with the list
+    return redirect('new')  # Specify the name of the view to redirect to
+
+
+
+def history(request):
+    sort = request.GET.get('sort', 'asc')  # ソートパラメータを取得、指定がなければ昇順とする
+    if sort == 'desc':
+        saved_results = SavedResult.objects.all().order_by('-id')  # 降順にソート
+    else:
+        saved_results = SavedResult.objects.all().order_by('id')   # 昇順にソート（デフォルト）
+
+    context = {
+        'saved_results': saved_results,
+    }
+    return render(request, 'teamapp/new.html', context)
+

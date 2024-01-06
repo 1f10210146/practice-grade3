@@ -38,12 +38,19 @@
 <body>
     <a href="{% url 'home' %}">ホームに戻る</a>
     <a href="{% url 'search_db' %}">問題作成</a>
+    <a href="{% url 'history' %}?sort=asc">昇順にソート</a> | <a href="{% url 'history' %}?sort=desc">降順にソート</a>
 
     {% if saved_results %}
         <h2>保存された SQL 結果の履歴</h2>
         <ul>
             {% for saved_result in saved_results %}
-                <li>{{ saved_result.sql_result | linebreaksbr }}</li>
+                <li>
+                    {{ saved_result.sql_result | linebreaksbr }}
+                    <form action="{% url 'delete_sql_result' saved_result.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="削除">
+                    </form>   
+                </li>
                 
                 <br>
                 <br>
