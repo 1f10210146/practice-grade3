@@ -1,26 +1,62 @@
 {% load static %}
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>教員補助</title>
-    <link href="{% static 'css/index.css' %}" rel="stylesheet" />
-  </head>
-  <body>
-    <h1>問題と解説</h1>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>教員補助</title>
+  <link href="{% static 'css/index.css' %}" rel="stylesheet">
+  <!-- Bootstrap CSS の CDN リンクを追加 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .sql-result {
+      border: 2px solid #007bff; /* Bootstrap primary color border */
+      background-color: #e9ecef; /* Light gray background */
+      padding: 15px; /* Some padding */
+      margin-bottom: 20px; /* Margin to the bottom */
+      border-radius: 5px; /* Rounded borders */
+    }
+    .chat-results {
+      border: 2px solid #28a745;  /* Bootstrap success color border */
+      background-color: #f8f9fa; /* Slightly lighter gray background */
+      padding: 15px; /* Some padding */
+      margin-bottom: 20px; /* Margin to the bottom */
+      border-radius: 5px; /* Rounded borders */
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">問題と解説</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'search_db' %}">問題作成</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'new' %}">履歴</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-    <!-- SQL_Result を表示 -->
+  <div class="container mt-4">
+    <!-- ここに検索フォームを追加 -->
+    <!-- SQL結果表示部分を整理 -->
+    <div class="sql-result mt-3">
+      {{SQL_Result}}
+    </div>
+    <div class="chat-results my-3">
+      {{ chat_results }}
+    </div>
+  </div>
 
-    <!-- 検索フォームを追加 -->
-
-    {{SQL_Result}}
-    <br>
-    <br>
-    {{ chat_results }}
-
-    <br>
-
-    <a href="{% url 'search_db' %}">問題作成</a>
-    <a href="{% url 'new' %}">履歴</a>
-  </body>
+  <!-- Bootstrap JavaScript の CDN リンクを追加 -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.10/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
