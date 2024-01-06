@@ -40,7 +40,7 @@ def home(request):
             messages=[
                 {
                     "role": "system",
-                    "content": "問題の答えと解説をお願いします"
+                    "content": "問題の答えと解説を一問ずつ詳しくお願いします"
                 },
                 {
                     "role": "user",
@@ -131,9 +131,11 @@ Use the following format:
     SQLQuery:   "SQL Query to run"
     SQLResult:  "Result of the SQLQuery"
     Answer:     "Final answer here"
-Only use the following tables: {table_info}
+Only use the following tables: {table_info}\n
 Question: {input}
 """
+
+template = template.replace('    ', '    \n')
 
 # SQLDatabaseChainに用いるプロンプトの定義
 prompt = PromptTemplate(

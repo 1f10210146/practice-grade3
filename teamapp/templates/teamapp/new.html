@@ -13,7 +13,7 @@
             margin: 0;
             padding: 20px;
             color: #333;
-            background-color: #F8F8F8;
+            
         }
         /* further styles as required */
     </style>
@@ -44,20 +44,31 @@
     <!-- Content and forms here -->
 
     {% if saved_results %}
-        <ul>
-            {% for saved_result in saved_results %}
-                <li>
-                    {{ saved_result.sql_result | linebreaksbr }}
-                    <form action="{% url 'delete_sql_result' saved_result.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="削除">
-                    </form>   
-                </li>
-                
-                <br>
-                <br>
-            {% endfor %}
-        </ul>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SQL Result</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for saved_result in saved_results %}
+                        <tr>
+                            <td>{{ saved_result.sql_result }}</td>
+                            <td>
+                                <form action="{% url 'delete_sql_result' saved_result.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="削除" class="btn btn-danger btn-sm">
+                                </form>
+                                <br>
+                            </td>
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
         <p>SQL 結果はありません。</p>
     {% endif %}
