@@ -79,11 +79,14 @@
         </div>
       </form>
       <div id="border"></div>
+      <p>問題文　｜　解答</p>
       {% if Question %}
       <div class="sqlQA">
         <!--<p><strong>質問:</strong> {{ Question }}</p>
         <p><strong>SQL クエリ:</strong> {{ SQL_Query }}</p> -->
-        <p>{{ SQL_Result }}</p>
+        {% for result in SQL_Result %}
+        <p>{{ result }}</p>
+        {% endfor %}
         <!--p><strong>回答:</strong> {{ Answer }}</p -->
       </div>
 
@@ -101,7 +104,6 @@
       <a href="{% url 'home' %}">解説</a>
       {% endif %}
 
-
       <script src="{% static 'js/searchField.js' %}"></script>
       <script>
         function updateSearchInput() {
@@ -110,19 +112,27 @@
           var grade = document.getElementById("grade").value;
           var field = document.getElementById("field").value;
           var count = document.getElementById("count").value;
-      
+
           // 選択された値を組み合わせて検索文字列を作成
           var searchString = field + "の問題とその答えを" + count;
-      
+
           // 検索ボックスの値を更新
           document.getElementById("input_text").value = searchString;
         }
-      
+
         // ドロップダウンの変更イベントに関数を関連付ける
-        document.getElementsByName("subject")[0].addEventListener("change", updateSearchInput);
-        document.getElementById("grade").addEventListener("change", updateSearchInput);
-        document.getElementById("field").addEventListener("change", updateSearchInput);
-        document.getElementById("count").addEventListener("change", updateSearchInput);
+        document
+          .getElementsByName("subject")[0]
+          .addEventListener("change", updateSearchInput);
+        document
+          .getElementById("grade")
+          .addEventListener("change", updateSearchInput);
+        document
+          .getElementById("field")
+          .addEventListener("change", updateSearchInput);
+        document
+          .getElementById("count")
+          .addEventListener("change", updateSearchInput);
         function saveSQLResult() {
           // 隠しフィールドからSQL_Resultを取得
           var savedSQLResult =

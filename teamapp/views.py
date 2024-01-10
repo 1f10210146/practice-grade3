@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
@@ -207,8 +208,9 @@ def search_db(request):
                 saved_result = SavedResult.objects.create(sql_result=sql_result)
                 saved_result.save()
                 
-        
-        request.session['SQL_Result'] = sql_result        
+        reg = re.compile(r"\), \(")
+        test = re.split(reg,sql_result[3:-2])       
+        dictionary["SQL_Result"] = test
         
         
         return render(request, 'teamapp/search_db.html', dictionary)
