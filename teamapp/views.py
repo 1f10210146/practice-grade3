@@ -31,6 +31,8 @@ def home(request):
 
     # ChatGPTの応答結果
     chat_results = request.session.get('Chat_Results', '')
+    
+   
 
     if sql_result:
         # SQL_Resultがある場合、ChatGPTにかけて解説を取得
@@ -65,8 +67,9 @@ def home(request):
    
 
     # テンプレートを描画してHTTPレスポンスを返す
-    template = loader.get_template('teamapp/home.html')
-    return HttpResponse(template.render(context, request))
+    #template = loader.get_template('teamapp/home.html')
+    #return HttpResponse(template.render(context, request))
+    return render(request, 'teamapp/home.html', context)
 
 
 
@@ -213,6 +216,10 @@ def search_db(request):
         dictionary["SQL_Result"] = test
         
         
+        request.session['SQL_Result'] = sql_result
+        
+        
+        
         return render(request, 'teamapp/search_db.html', dictionary)
     
     context = {'form': form}
@@ -225,8 +232,15 @@ def search_db(request):
 
 
 def new(request):
+    
+    # SQL_Resultをセッションから取得
+    sql_result = request.session.get('SQL_Result', '')
+
+    
+    
     context = {
-        "saved_results" : SavedResult.objects.all()
+        "saved_results" : SavedResult.objects.all(),
+        #'SQL_Result': sql_result,
     }
     
 
